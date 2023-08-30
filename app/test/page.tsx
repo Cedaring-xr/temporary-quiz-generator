@@ -12,9 +12,14 @@ export default async function TestPage() {
 
 	const content = (
 		<section>
-			<h2>
-				<Link href="/">Back to Home</Link>
-			</h2>
+			<div>
+				<h2>Input test ID</h2>
+				<input type="text"></input>
+				<p>Don't have a test ID, check out one of the pre-made tests below</p>
+				<button>Pre-made test 1</button>
+				<button>Pre-made test 2</button>
+				<button>Pre-made test 3</button>
+			</div>
 			<br></br>
 			{users.map((user) => {
 				return (
