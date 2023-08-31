@@ -10,11 +10,16 @@ export default async function TestPage() {
 
 	const users = await usersData
 
+	const fetchData = () => {
+		console.log('test')
+	}
+
 	const content = (
 		<section>
 			<div>
 				<h2>Input test ID</h2>
 				<input type="text"></input>
+				<button onClick={fetchData}>Search</button>
 				<p>Don't have a test ID, check out one of the pre-made tests below</p>
 				<button>Pre-made test 1</button>
 				<button>Pre-made test 2</button>

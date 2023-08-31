@@ -1,7 +1,6 @@
 'use client'
 
 import React, { useState, FormEvent } from 'react'
-import Image from 'next/image'
 import Link from 'next/link'
 import styles from './page.module.css'
 
@@ -38,31 +37,76 @@ export default function Page() {
 		}
 	}
 
+	function addQuestion() {
+		console.log('test add question')
+		return <div>Hello</div>
+	}
+
 	return (
-		<div>
-			<div className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-400 bg-gradient-to-b from-zinc-300 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-300 lg:p-4 lg:dark:bg-zinc-800/30">
-				<Link href="/">Home</Link>
-			</div>
-			<div>
+		<div className="h-screen">
+			<div className="mx-20 p-2 rounded-md bg-neutral-600">
 				{error && <div style={{ color: 'red' }}>{error}</div>}
-				<form onSubmit={onSubmit} className={styles.main}>
-					<label>Test Name</label>
-					<input type="text" name="name" />
-					<div>
-						<label>question number</label>
-						<input type="text" placeholder="Name"></input>
-						<label>Answer Option 1</label>
-						<input type="text" placeholder="Option one"></input>
-						<label>Answer Option 2</label>
-						<input type="text" placeholder="Option two"></input>
-						<label>Answer Option 3</label>
-						<input type="text" placeholder="Option three"></input>
-						<label>Answer Option 4</label>
-						<input type="text" placeholder="Option four"></input>
+				<form onSubmit={onSubmit} className=" text-neutral-100 flex flex-col">
+					<label className="mx-2 mt-2">Test Name</label>
+					<input
+						type="text"
+						name="name"
+						placeholder="Test Name"
+						className="rounded-md border-amber-900 m-2 p-1 w-64 text-slate-900"
+					/>
+					<div className="flex flex-col">
+						<label className="mx-2 mt-2">Question Name</label>
+						<input
+							type="text"
+							placeholder="Name"
+							className="rounded-md border-amber-900 m-2 p-0.5 w-64 text-slate-900"
+						></input>
+						<h3 className="m-1 mt-4">Please select the radio button for the correct answer</h3>
+						<label className="mx-2 mt-1">Answer Option 1</label>
+						<div className="flex flex-row align-top p-2">
+							<input type="radio" name="choose"></input>
+							<textarea
+								placeholder="Option one"
+								className="rounded-md border-amber-900 mx-2 p-0.5 w-64 text-slate-900"
+							></textarea>
+						</div>
+						<label className="mx-2 mt-2">Answer Option 2</label>
+						<div className="flex flex-row align-top p-2">
+							<input type="radio" name="choose"></input>
+							<textarea
+								placeholder="Option two"
+								className="rounded-md border-amber-900 mx-2 p-0.5 w-64 text-slate-900"
+							></textarea>
+						</div>
+						<label className="mx-2 mt-2">Answer Option 3</label>
+						<div className="flex flex-row align-top p-2">
+							<input type="radio" name="choose"></input>
+							<textarea
+								placeholder="Option three"
+								className="rounded-md border-amber-900 mx-2 p-0.5 w-64 text-slate-900"
+							></textarea>
+						</div>
+						<label className="mx-2 mt-2">Answer Option 4</label>
+						<div className="flex flex-row align-top p-2">
+							<input type="radio" name="choose"></input>
+							<textarea
+								placeholder="Option four"
+								className="rounded-md border-amber-900 m-2 w-64 p-0.5 text-slate-900"
+							></textarea>
+						</div>
 					</div>
-					<button>add new question</button>
+					<button
+						className="bg-emerald-600 text-neutral-100 rounded-md p-2 w-fit mx-auto"
+						onClick={addQuestion}
+					>
+						Add New Question
+					</button>
 					<br></br>
-					<button type="submit" disabled={isLoading}>
+					<button
+						type="submit"
+						disabled={isLoading}
+						className="bg-teal-600 text-neutral-100 rounded-md w-3/4 mx-auto p-2"
+					>
 						{isLoading ? 'Loading...' : 'Submit'}
 					</button>
 				</form>
