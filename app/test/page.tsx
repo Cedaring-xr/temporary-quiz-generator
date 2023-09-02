@@ -1,43 +1,77 @@
-import type { Metadata } from 'next'
+'use client'
+
+import { useState } from 'react'
 import getUsers from '@/lib/getUsers'
 import Link from 'next/link'
+import tempData from '../../data/first.json'
 
-export const metadata: Metadata = {
-	title: 'Users'
-}
-export default async function TestPage() {
-	const usersData: Promise<User[]> = getUsers()
-
-	const users = await usersData
+export default function TestPage() {
+	const [testID, setTestID] = useState('')
+	const [searchQuery, setSearchQuery] = useState<string>('')
+	const [showTest, setShowTest] = useState<boolean>(false)
 
 	const fetchData = () => {
-		console.log('test')
+		console.log('test fetching data')
+		console.log('temp data', tempData)
+		setShowTest(true)
 	}
 
-	const content = (
-		<section>
-			<div>
-				<h2>Input test ID</h2>
-				<input type="text"></input>
-				<button onClick={fetchData}>Search</button>
-				<p>Don't have a test ID, check out one of the pre-made tests below</p>
-				<button>Pre-made test 1</button>
-				<button>Pre-made test 2</button>
-				<button>Pre-made test 3</button>
-			</div>
-			<br></br>
-			{users.map((user) => {
-				return (
-					<>
-						<p key={user.id}>
-							<Link href={`/users/${user.id}`}>{user.name}</Link>
-						</p>
-						<br></br>
-					</>
-				)
-			})}
-		</section>
-	)
+	const handleSearchChange = (e) => {
+		setSearchQuery(e.target.value)
+	}
 
-	return content
+	return (
+		<div className="bg-slate-300 p-4 mx-auto w-4/5 h-screen rounded-xl">
+			<div className="flex flex-col">
+				<h2>Input test ID</h2>
+				<input type="text" value={searchQuery} onChange={handleSearchChange}></input>
+				<button
+					onClick={() => fetchData()}
+					className="bg-emerald-600 text-neutral-100 rounded-md p-2 w-fit mx-auto"
+				>
+					Search for Test
+				</button>
+
+				{!showTest ? (
+					<>
+						<p className="mt-8">Don't have a test ID, check out one of the pre-made tests below</p>
+						<div className="flex flex-row gap-2">
+							<button className="bg-neutral-600 text-neutral-100 rounded-md p-2 w-fit mx-auto">
+								Pre-made test 1
+							</button>
+							<button className="bg-neutral-600 text-neutral-100 rounded-md p-2 w-fit mx-auto">
+								Pre-made test 2
+							</button>
+							<button className="bg-neutral-600 text-neutral-100 rounded-md p-2 w-fit mx-auto">
+								Pre-made test 3
+							</button>
+						</div>
+					</>
+				) : (
+					''
+				)}
+			</div>
+			<div id="test-container">
+				{showTest ? (
+					<div>
+						<h2>{tempData['quiz-title']}</h2>
+						{/* for each question map through and display the questions */}
+						<h3>{tempData['quiz-data'][0]['question-text']}</h3>
+						<div className="flex gap-2 flex-col">
+							<input type="radio"></input>
+							<p className="">{tempData['quiz-data'][0].options[0]['option-1']}</p>
+							<input type="radio"></input>
+							<p className="">{tempData['quiz-data'][0].options[1]['option-2']}</p>
+							<input type="radio"></input>
+							<p className="">{tempData['quiz-data'][0].options[2]['option-3']}</p>
+							<input type="radio"></input>
+							<p className="">{tempData['quiz-data'][0].options[3]['option-4']}</p>
+						</div>
+					</div>
+				) : (
+					''
+				)}
+			</div>
+		</div>
+	)
 }
