@@ -6,46 +6,19 @@ import { useFormik } from 'formik'
 
 export default function Page() {
 	// const [isLoading, setIsLoading] = useState<boolean>(false)   // not used right now
-	const [error, setError] = useState<string | null>(null)
-	const [questionCount, setQuestionCount] = useState<Question[]>([]) //number of questions added, starts at 0
+	const [questionCount, setQuestionCount] = useState([]) //number of questions added, starts at 0
 
 	const formik = useFormik({
 		initialValues: {
+			//one for each input value
 			testName: '',
-			testID: ''
+			questionName: ''
 		},
 		onSubmit: (values) => {
-			alert(JSON.stringify(values, null, 2))
+			console.log('submit form', values)
+			// alert(JSON.stringify(values, null, 2))
 		}
 	})
-
-	async function onSubmit(e) {
-		e.preventDefault()
-
-		console.log(formik.values)
-
-		// setIsLoading(true)
-		// setError(null)
-		// try {
-		// 	const formData = new FormData(event.currentTarget)
-		// 	console.log('form data', formData)
-		// 	const response = await fetch('/api/submit', {
-		// 		method: 'POST',
-		// 		body: formData
-		// 	})
-		// 	if (!response.ok) {
-		// 		throw new Error('Failed to submit the data. Please try again.')
-		// 	}
-		// 	// Handle response if necessary
-		// 	const data = await response.json()
-		// } catch (error) {
-		// 	// Capture the error message to display to the user
-		// 	setError(error.message)
-		// 	console.error(error)
-		// } finally {
-		// 	setIsLoading(false)
-		// }
-	}
 
 	function addQuestion() {
 		console.log('test add question')
@@ -67,25 +40,25 @@ export default function Page() {
 	return (
 		<div className="h-screen">
 			<div className="mx-20 p-2 rounded-md bg-neutral-600">
-				{error && <div style={{ color: 'red' }}>{error}</div>}
-				<form onSubmit={() => onSubmit} className=" text-neutral-100 flex flex-col">
+				<form onSubmit={formik.handleSubmit} className=" text-neutral-100 flex flex-col">
 					<label className="mx-2 mt-2">Quiz Name</label>
 					<input
+						id="testName"
+						name="testName"
 						type="text"
-						name="name"
 						placeholder="Test Name"
+						onChange={formik.handleChange}
+						value={formik.values.testName}
 						className="rounded-md border-amber-900 m-2 p-1 w-64 text-slate-900"
 						required
-						value={formik.values.testName}
-						onChange={formik.handleChange}
 					/>
-					<button
+					{/* <button
 						className="bg-emerald-600 text-neutral-100 rounded-md p-2 w-fit mx-auto"
 						type="button"
 						onClick={addQuestion}
 					>
 						Add New Question
-					</button>
+					</button> */}
 
 					{questionCount.map((question) => (
 						<div id="questionForm" className="flex flex-col" key={question.id}>

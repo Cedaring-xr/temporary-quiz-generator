@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import getUsers from '@/lib/getUsers'
 import Link from 'next/link'
 import tempData from '../../data/first.json'
 
@@ -16,15 +15,15 @@ export default function TestPage() {
 		setShowTest(true)
 	}
 
-	const handleSearchChange = (e) => {
-		setSearchQuery(e.target.value)
-	}
+	// const handleSearchChange = () => {
+	// 	setSearchQuery(e.target.value)
+	// }
 
 	return (
 		<div className="bg-slate-300 p-4 mx-auto w-4/5 h-screen rounded-xl">
 			<div className="flex flex-col">
 				<h2>Input test ID</h2>
-				<input type="text" value={searchQuery} onChange={handleSearchChange}></input>
+				<input type="text" value={searchQuery}></input>
 				<button
 					onClick={() => fetchData()}
 					className="bg-emerald-600 text-neutral-100 rounded-md p-2 w-fit mx-auto"
