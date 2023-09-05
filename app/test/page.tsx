@@ -1,29 +1,43 @@
 'use client'
 
 import { useState } from 'react'
-import Link from 'next/link'
 import tempData from '../../data/first.json'
 
 export default function TestPage() {
 	const [testID, setTestID] = useState('')
 	const [searchQuery, setSearchQuery] = useState<string>('')
 	const [showTest, setShowTest] = useState<boolean>(false)
+	const [questionData, setQuestionData] = useState([])
 
 	const fetchData = () => {
 		console.log('test fetching data')
 		console.log('temp data', tempData)
 		setShowTest(true)
+		setQuestionData(tempData['quiz-data'])
+		// quizData = tempData['quiz-data']
 	}
 
-	// const handleSearchChange = () => {
-	// 	setSearchQuery(e.target.value)
-	// }
+	const handleSearchChange = (event) => {
+		setSearchQuery(event.target.value)
+	}
+
+	const handleQuizSubmit = () => {
+		console.log('submit quiz')
+		// return alert if all questions are not answered
+
+		//compare responses to correct answsers
+
+		// output overall score
+		// calculate score
+		// hide quiz questions
+		// show results div
+	}
 
 	return (
 		<div className="bg-slate-300 p-4 mx-auto w-4/5 h-screen rounded-xl">
 			<div className="flex flex-col">
 				<h2>Input test ID</h2>
-				<input type="text" value={searchQuery}></input>
+				<input type="text" value={searchQuery} onChange={handleSearchChange}></input>
 				<button
 					onClick={() => fetchData()}
 					className="bg-emerald-600 text-neutral-100 rounded-md p-2 w-fit mx-auto"
@@ -54,18 +68,27 @@ export default function TestPage() {
 				{showTest ? (
 					<div>
 						<h2>{tempData['quiz-title']}</h2>
-						{/* for each question map through and display the questions */}
-						<h3>{tempData['quiz-data'][0]['question-text']}</h3>
-						<div className="flex gap-2 flex-col">
-							<input type="radio"></input>
-							<p className="">{tempData['quiz-data'][0].options[0]['option-1']}</p>
-							<input type="radio"></input>
-							<p className="">{tempData['quiz-data'][0].options[1]['option-2']}</p>
-							<input type="radio"></input>
-							<p className="">{tempData['quiz-data'][0].options[2]['option-3']}</p>
-							<input type="radio"></input>
-							<p className="">{tempData['quiz-data'][0].options[3]['option-4']}</p>
-						</div>
+						{questionData.map((question) => (
+							<div key={question['question-id']}>
+								<h3>{question['question-text']}</h3>
+								<div className="grid grid-cols-[30px_minmax(900px,_1fr)] ">
+									<input type="radio" name={question['question-id']}></input>
+									<label>{question.options[0]['option-text']}</label>
+									<input type="radio" name={question['question-id']}></input>
+									<label>{question.options[1]['option-text']}</label>
+									<input type="radio" name={question['question-id']}></input>
+									<label>{question.options[2]['option-text']}</label>
+									<input type="radio" name={question['question-id']}></input>
+									<label>{question.options[3]['option-text']}</label>
+								</div>
+							</div>
+						))}
+						<button
+							className="bg-emerald-600 text-neutral-100 rounded-md p-2 w-fit mx-auto"
+							onClick={() => handleQuizSubmit}
+						>
+							Submit Quiz
+						</button>
 					</div>
 				) : (
 					''

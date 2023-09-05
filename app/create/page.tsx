@@ -4,9 +4,14 @@ import React, { useState, FormEvent } from 'react'
 import styles from './page.module.css'
 import { useFormik } from 'formik'
 
+interface Question {
+	name: string
+	id: number
+}
+
 export default function Page() {
 	// const [isLoading, setIsLoading] = useState<boolean>(false)   // not used right now
-	const [questionCount, setQuestionCount] = useState([]) //number of questions added, starts at 0
+	const [questionCount, setQuestionCount] = useState<Question[]>([]) //number of questions added, starts at 0
 
 	const formik = useFormik({
 		initialValues: {
@@ -31,7 +36,7 @@ export default function Page() {
 		setQuestionCount([...questionCount, newQuestion])
 	}
 
-	function removeQuestion(questionID) {
+	function removeQuestion(questionID: number) {
 		console.log('remove question clicked', questionID)
 		const updatedQuestions = questionCount.filter((question) => question.id !== questionID)
 		setQuestionCount(updatedQuestions)
@@ -52,13 +57,13 @@ export default function Page() {
 						className="rounded-md border-amber-900 m-2 p-1 w-64 text-slate-900"
 						required
 					/>
-					{/* <button
+					<button
 						className="bg-emerald-600 text-neutral-100 rounded-md p-2 w-fit mx-auto"
 						type="button"
 						onClick={addQuestion}
 					>
 						Add New Question
-					</button> */}
+					</button>
 
 					{questionCount.map((question) => (
 						<div id="questionForm" className="flex flex-col" key={question.id}>

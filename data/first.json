@@ -8,19 +8,19 @@
 			"question-text": "what is 4 + 12?",
 			"options": [
 				{
-					"option-1": "23",
+					"option-text": "23",
 					"answer": false
 				},
 				{
-					"option-2": "12",
+					"option-text": "12",
 					"answer": false
 				},
 				{
-					"option-3": "16",
+					"option-text": "16",
 					"answer": true
 				},
 				{
-					"option-4": "18",
+					"option-text": "18",
 					"answer": false
 				}
 			]
@@ -30,19 +30,19 @@
 			"question-text": "what is 6 + 6?",
 			"options": [
 				{
-					"option-1": "23",
+					"option-text": "23",
 					"answer": false
 				},
 				{
-					"option-2": "12",
+					"option-text": "12",
 					"answer": true
 				},
 				{
-					"option-3": "16",
+					"option-text": "16",
 					"answer": false
 				},
 				{
-					"option-4": "18",
+					"option-text": "18",
 					"answer": false
 				}
 			]
