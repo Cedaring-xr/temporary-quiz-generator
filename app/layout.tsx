@@ -36,13 +36,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 					</nav>
 				</div>
 				{children}
-				<footer className="bg-slate-700 w-full h-10 flex">
-					<p className="text-neutral-100 my-auto">
+				<footer>
+					{/* <p className="text-neutral-100 my-auto">
 						created by:{' '}
 						<a href="https://github.com/Cedaring-xr" target="blank" className="">
 							Matt Ray
 						</a>
-					</p>
+					</p> */}
 				</footer>
 			</body>
 		</html>

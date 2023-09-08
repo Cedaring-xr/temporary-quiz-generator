@@ -1,3 +1,38 @@
-.main {
-	background-color: aqua;
+.tab {
+	min-width: 80px;
+	height: 3rem;
+	background-color: rgb(150, 150, 150);
+	margin: 8px;
+	margin-bottom: 0px;
+	display: inline-block;
+	border-radius: 8px 8px 0 0;
+	border: 1px solid black;
+	border-bottom: 0;
+}
+
+.active-tab {
+	background-color: rgb(53, 52, 52);
+	width: 80px;
+	height: 3rem;
+	margin: 8px;
+	margin-bottom: 0px;
+	display: inline-block;
+	border-radius: 8px 8px 0 0;
+	border: 1px solid black;
+	border-bottom: 0;
+}
+
+.content {
+	display: none;
+}
+
+.active-content {
+	display: block;
+	background-color: rgb(53, 52, 52);
+	border-radius: 8px;
+	border: 1px solid black;
+	border-top: 0;
+	padding: 1rem;
+	overflow: hidden;
+	max-width: 1200px;
 }

@@ -3,11 +3,17 @@
 import { useState } from 'react'
 import tempData from '../../data/first.json'
 
+interface Question {
+	'question-id': string
+	'question-text': string
+	options: any[]
+}
+
 export default function TestPage() {
 	const [testID, setTestID] = useState('')
 	const [searchQuery, setSearchQuery] = useState<string>('')
 	const [showTest, setShowTest] = useState<boolean>(false)
-	const [questionData, setQuestionData] = useState([])
+	const [questionData, setQuestionData] = useState<Question[]>([])
 
 	const fetchData = () => {
 		console.log('test fetching data')
@@ -17,7 +23,7 @@ export default function TestPage() {
 		// quizData = tempData['quiz-data']
 	}
 
-	const handleSearchChange = (event) => {
+	const handleSearchChange = (event: any) => {
 		setSearchQuery(event.target.value)
 	}
 
@@ -29,9 +35,13 @@ export default function TestPage() {
 
 		// output overall score
 		// calculate score
+		calculateScore()
 		// hide quiz questions
+		setShowTest(false)
 		// show results div
 	}
+
+	const calculateScore = () => {}
 
 	return (
 		<div className="bg-slate-300 p-4 mx-auto w-4/5 h-screen rounded-xl">
@@ -85,7 +95,7 @@ export default function TestPage() {
 						))}
 						<button
 							className="bg-emerald-600 text-neutral-100 rounded-md p-2 w-fit mx-auto"
-							onClick={() => handleQuizSubmit}
+							onClick={() => handleQuizSubmit()}
 						>
 							Submit Quiz
 						</button>
