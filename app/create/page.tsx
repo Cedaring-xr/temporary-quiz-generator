@@ -3,6 +3,7 @@
 import React, { useState, FormEvent } from 'react'
 import styles from './page.module.css'
 import { useFormik } from 'formik'
+import * as Yup from 'yup'
 
 interface Question {
 	name: string
@@ -14,24 +15,51 @@ export default function Page() {
 	const [toggleTab, setToggleTab] = useState<Number>(1)
 
 	const showTab = (index) => {
-		console.log(index)
 		setToggleTab(index)
 	}
 
+	const validationSchema = Yup.object({
+		quizTitle: Yup.string().required('Required')
+	})
+
 	const formik = useFormik({
 		initialValues: {
-			//one for each input value
-			testName: '',
-			questionName: ''
+			'quiz-id': 0,
+			'quiz-share-string': '',
+			quizTitle: '',
+			quizData: [
+				{
+					questionNumber: 0,
+					questionText: '',
+					options: [
+						{
+							optionText: '',
+							answer: true
+						},
+						{
+							optionText: '',
+							answer: false
+						},
+						{
+							optionText: '',
+							answer: false
+						},
+						{
+							optionText: '',
+							answer: false
+						}
+					]
+				}
+			]
 		},
 		onSubmit: (values) => {
 			console.log('submit form', values)
 			// alert(JSON.stringify(values, null, 2))
-		}
+		},
+		validationSchema
 	})
 
 	function addQuestion() {
-		console.log('test add question')
 		const timeStamp = new Date().getTime()
 		const random = Math.floor(Math.random() * 1000)
 		const newQuestion = {
@@ -44,9 +72,8 @@ export default function Page() {
 	}
 
 	function removeQuestion(questionID: number) {
-		console.log('remove question clicked', questionID)
+		// console.log('remove question clicked', questionID)
 		// refresh questio count number
-		// TODO: set any other tabs as active
 		const updatedQuestions = questionCount.filter((question) => question.id !== questionID)
 		setQuestionCount(updatedQuestions)
 		showTab(questionCount.length - 1)
@@ -56,19 +83,21 @@ export default function Page() {
 		<div className="h-screen">
 			<div className="tabs-container mx-20 p-2 rounded-md bg-neutral-600">
 				<form onSubmit={formik.handleSubmit} className=" text-neutral-100 flex flex-col">
-					<label htmlFor="testName" className="mx-2 mt-2">
+					<label htmlFor="quizTitle" className="mx-2 mt-2">
 						Quiz Name
 					</label>
 					<input
-						id="testName"
-						name="testName"
+						id="quizTitle"
+						name="quizTitle"
 						type="text"
 						placeholder="Test Name"
-						onChange={formik.handleChange}
-						value={formik.values.testName}
+						{...formik.getFieldProps('quizTitle')}
 						className="rounded-md border-amber-900 m-2 p-1 w-64 text-slate-900"
 						required
 					/>
+					{formik.errors.quizTitle ? (
+						<div className="text-red-500 pl-3 capitalize">* {formik.errors.quizTitle}</div>
+					) : null}
 					<button
 						className="bg-emerald-600 text-neutral-100 rounded-md p-2 w-fit mx-auto border-2 border-neutral-900"
 						type="button"
@@ -102,17 +131,26 @@ export default function Page() {
 								Question Name
 							</label>
 							<input
-								name="questionName"
+								id="questionName"
 								type="text"
 								placeholder="Name"
 								className="rounded-md border-amber-900 m-2 p-0.5 w-64 text-slate-900"
+								value={formik.values.quizData.questionText}
+								onChange={formik.handleChange}
+								onBlur={formik.handleBlur}
 								required
 							></input>
+							{formik.errors.quizData ? (
+								<div className="text-red-500 pl-3 capitalize">* {formik.errors.quizData}</div>
+							) : null}
 							<h3 className="m-1 mt-4">Please select the radio button of the correct answer</h3>
-							<label className="mx-2 mt-1">Answer Option 1</label>
+							<label className="mx-2 mt-1" htmlFor="option1">
+								Answer Option 1
+							</label>
 							<div className="flex flex-row align-top p-2">
 								<input type="radio" name="choose" required></input>
 								<textarea
+									id="option1"
 									placeholder="Option one"
 									className="rounded-md border-amber-900 mx-2 p-0.5 min-w-[400px] resize text-slate-900"
 									required
